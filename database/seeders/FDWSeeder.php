@@ -1,0 +1,22 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class FDWSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $sql = 'CREATE EXTENSION postgres_fdw;';
+        $sql .= 'CREATE SERVER sisppi FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host \'localhost\', dbname \'ses\');';
+        $sql .= 'CREATE USER MAPPING FOR postgres SERVER sisppi OPTIONS (user \'postgres\', password \'postgres\');';
+        $sql .= 'IMPORT FOREIGN SCHEMA public LIMIT TO (users,password_reset_tokens,sessions,personal_access_tokens) FROM SERVER sisppi INTO public;';
+        DB::unprepared($sql);
+    }
+}
