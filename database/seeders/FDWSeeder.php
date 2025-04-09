@@ -14,9 +14,9 @@ class FDWSeeder extends Seeder
     public function run(): void
     {
         $sql = 'CREATE EXTENSION postgres_fdw;';
-        $sql .= 'CREATE SERVER sisppi FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host \'localhost\', dbname \'ses\');';
+        $sql .= 'CREATE SERVER sisppi FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host \'localhost\', dbname \'ses.core\');';
         $sql .= 'CREATE USER MAPPING FOR postgres SERVER sisppi OPTIONS (user \'postgres\', password \'postgres\');';
-        $sql .= 'IMPORT FOREIGN SCHEMA public LIMIT TO (users,password_reset_tokens,sessions,personal_access_tokens) FROM SERVER sisppi INTO public;';
+        $sql .= 'IMPORT FOREIGN SCHEMA public LIMIT TO (users,password_reset_tokens,sessions,personal_access_tokens,permissions,roles,model_has_permissions,model_has_roles,role_has_permissions) FROM SERVER sisppi INTO public;';
         DB::unprepared($sql);
     }
 }

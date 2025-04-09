@@ -1,8 +1,17 @@
 <?php
 
+use App\Http\Middleware\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
+
+Route::group(['middleware' => 'api'], function ($router) {
+
+    Route::get('welcome', function() {
+        return response()->json('Welcome to SISPPI API', 200);
+    })->middleware(Auth::class);
+
+});
