@@ -28,6 +28,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'user'], function ($router) {
 
 });
 
+Route::group(['middleware' => 'api', 'prefix' => 'role'], function ($router) {
+
+    Route::get('get/roles', [RoleController::class, 'getRoles'])->middleware(Auth::class);
+    Route::get('get/permissions', [RoleController::class, 'getPermissions'])->middleware(Auth::class);
+
+});
+
 Route::group(['middleware' => 'api', 'prefix' => 'county'], function ($router) {
 
     Route::get('get/counties', [CountyController::class, 'getCounties'])->middleware(Auth::class);
